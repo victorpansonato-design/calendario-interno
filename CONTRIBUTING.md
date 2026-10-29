@@ -8,11 +8,11 @@ Guia **operacional**. Para o _porquê_ das decisões de arquitetura, leia [ARCHI
 
 ```bash
 npm install
-npm run setup       # renomeia o template para o seu projeto (base path, URLs, proxy). Rode UMA vez.
-npm run dev
+cp .env.example .env.local   # ajuste se precisar (base path, API, modo de login)
+npm run dev                  # http://localhost:5173/calendario-interno/
 ```
 
-> Rode `npm run setup` **antes de escrever código** - ele ajusta nome, base path e URLs em todos os lugares. Começar antes significa refazer ajustes depois.
+> O projeto já foi configurado a partir do template React Anchieta (nome, base path `/calendario-interno/`, URLs e proxy). O guia original do template está em [docs/template.md](./docs/template.md).
 
 ---
 
