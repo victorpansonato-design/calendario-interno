@@ -1,10 +1,9 @@
 {
    "name": "calendario-interno",
    "private": true,
-   "version": "1.0.0",
+   "version": "0.1.0",
    "type": "module",
    "scripts": {
-      "setup": "node scripts/setup.mjs",
       "dev": "vite",
       "build": "vite build --out-dir build",
       "deploy:local": "npm run build && node scripts/deploy-local.mjs",
@@ -12,7 +11,7 @@
       "test": "vitest run",
       "test:watch": "vitest",
       "test:coverage": "vitest run --coverage",
-      "typecheck": "tsc --noEmit",
+      "typecheck": "tsc --noEmit -p tsconfig.app.json",
       "lint": "eslint .",
       "lint:fix": "eslint . --fix",
       "format": "prettier --check .",

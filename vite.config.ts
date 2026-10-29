@@ -35,6 +35,8 @@ const VENDOR_CHUNKS: Record<string, string[]> = {
       "react-day-picker",
       "date-fns",
    ],
+   "vendor-motion": ["motion", "framer-motion", "motion-dom", "motion-utils"],
+   "vendor-radix": ["radix-ui", "@radix-ui"],
    "vendor-utils": ["axios", "next-themes", "zustand"],
 };
 

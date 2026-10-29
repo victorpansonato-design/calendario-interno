@@ -19,10 +19,15 @@ interface RouteEntry {
  * O fallback usa o último segmento da URL como rótulo.
  */
 const ROUTES: RouteEntry[] = [
-   {
-      match: /^\/dashboard$/,
-      build: () => [{ label: "Painel" }],
-   },
+   { match: /^\/painel$/, build: () => [{ label: "Meu painel" }] },
+   { match: /^\/processos$/, build: () => [{ label: "Dia a dia", to: "/painel" }, { label: "Processos" }] },
+   { match: /^\/linha-do-tempo$/, build: () => [{ label: "Dia a dia", to: "/painel" }, { label: "Linha do tempo" }] },
+   { match: /^\/calendario$/, build: () => [{ label: "Dia a dia", to: "/painel" }, { label: "Calendário" }] },
+   { match: /^\/setores$/, build: () => [{ label: "Dia a dia", to: "/painel" }, { label: "Por setor" }] },
+   { match: /^\/rematricula$/, build: () => [{ label: "Ciclo 2027-1" }, { label: "Rematrícula" }] },
+   { match: /^\/contrato$/, build: () => [{ label: "Ciclo 2027-1" }, { label: "Novo contrato" }] },
+   { match: /^\/pontos-de-atencao$/, build: () => [{ label: "Ciclo 2027-1" }, { label: "Pontos de atenção" }] },
+   { match: /^\/como-funciona$/, build: () => [{ label: "Ajuda" }, { label: "Como funciona" }] },
 ];
 
 function titleizeSegment(segment: string): string {

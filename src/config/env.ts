@@ -18,6 +18,12 @@ export const env = {
    /** URL do SSO para onde o interceptor redireciona no 401. */
    loginUrl: import.meta.env.VITE_LOGIN_URL || "/intranet/intranet/build/index.html#/funcionario",
 
+   /**
+    * `demo` (padrão enquanto o sistema é só front): entra direto, com um usuário de demonstração.
+    * `sso`: usa o login da intranet (`/funcionarios/me`), como o template original.
+    */
+   authMode: (import.meta.env.VITE_AUTH_MODE === "sso" ? "sso" : "demo") as "sso" | "demo",
+
    /** `true` em desenvolvimento (`vite`), `false` no build de produção. */
    isDev: import.meta.env.DEV,
 } as const;

@@ -22,7 +22,7 @@ export function SystemLogo() {
          transition={SECTION_MOTION_TRANSITION}
          className="flex min-h-15 items-center pb-2 pt-4"
       >
-         <Link to="/dashboard" aria-label="Ir para o painel" onClick={handleNavigate}>
+         <Link to="/painel" aria-label="Ir para o painel" onClick={handleNavigate}>
             <motion.span
                layout="position"
                transition={ITEM_MOTION_TRANSITION}
@@ -42,7 +42,7 @@ export function SystemLogo() {
                   transition={ITEM_MOTION_TRANSITION}
                   className="ml-3 flex min-w-0 flex-col leading-tight"
                >
-                  <span className="font-display text-[14px] font-medium text-foreground">Template</span>
+                  <span className="font-display text-[14px] font-medium text-foreground">Calendário Interno</span>
                   <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Grupo Anchieta</span>
                </motion.div>
             )}

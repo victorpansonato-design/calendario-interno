@@ -2,7 +2,25 @@ import { AnimatePresence, motion } from "motion/react";
 import { useCallback } from "react";
 import { useLocation } from "react-router-dom";
 
-import { Check, ChevronUp, LaptopMinimal, LayoutDashboard, LogOut, type LucideIcon, Moon, Settings2, Sun, Users } from "lucide-react";
+import {
+   AlertTriangle,
+   Building2,
+   CalendarDays,
+   Check,
+   ChevronUp,
+   FileSignature,
+   GanttChart,
+   HelpCircle,
+   LaptopMinimal,
+   LayoutDashboard,
+   ListChecks,
+   LogOut,
+   type LucideIcon,
+   Moon,
+   RefreshCcw,
+   Settings2,
+   Sun,
+} from "lucide-react";
 
 import {
    DropdownMenu,
@@ -51,11 +69,26 @@ interface UserCardProps {
 
 const MENU: MenuSection[] = [
    {
-      label: "Menu Principal",
+      label: "Dia a dia",
       items: [
-         { label: "Painel", path: "/dashboard", icon: LayoutDashboard },
-         { label: "Usuários", path: "/users", icon: Users },
+         { label: "Meu painel", path: "/painel", icon: LayoutDashboard },
+         { label: "Processos", path: "/processos", icon: ListChecks },
+         { label: "Linha do tempo", path: "/linha-do-tempo", icon: GanttChart },
+         { label: "Calendário", path: "/calendario", icon: CalendarDays },
+         { label: "Por setor", path: "/setores", icon: Building2 },
       ],
+   },
+   {
+      label: "Ciclo 2027-1",
+      items: [
+         { label: "Rematrícula", path: "/rematricula", icon: RefreshCcw },
+         { label: "Novo contrato", path: "/contrato", icon: FileSignature },
+         { label: "Pontos de atenção", path: "/pontos-de-atencao", icon: AlertTriangle },
+      ],
+   },
+   {
+      label: "Ajuda",
+      items: [{ label: "Como funciona", path: "/como-funciona", icon: HelpCircle }],
    },
 ];
 
