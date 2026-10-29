@@ -16,133 +16,133 @@
 
 ### Marca
 
-| Token | Valor claro | Papel |
-|---|---|---|
-| `--brand-blue` | `oklch(39.341% 0.16812 263.91)` | Azul institucional principal. |
-| `--brand-blue-strong` | `oklch(32% 0.17 263.91)` | Azul mais profundo para ênfase. |
-| `--brand-blue-soft` | `oklch(95% 0.025 263.91)` | Fundo azul sutil. |
-| `--brand-yellow` | `oklch(82% 0.165 86)` | Assinatura e acento institucional. |
-| `--brand-yellow-strong` | `oklch(72% 0.155 82)` | Amarelo escurecido, base de warning claro. |
-| `--brand-yellow-soft` | `oklch(96% 0.05 95)` | Fundo amarelo sutil. |
+| Token                   | Valor claro                     | Papel                                      |
+| ----------------------- | ------------------------------- | ------------------------------------------ |
+| `--brand-blue`          | `oklch(39.341% 0.16812 263.91)` | Azul institucional principal.              |
+| `--brand-blue-strong`   | `oklch(32% 0.17 263.91)`        | Azul mais profundo para ênfase.            |
+| `--brand-blue-soft`     | `oklch(95% 0.025 263.91)`       | Fundo azul sutil.                          |
+| `--brand-yellow`        | `oklch(82% 0.165 86)`           | Assinatura e acento institucional.         |
+| `--brand-yellow-strong` | `oklch(72% 0.155 82)`           | Amarelo escurecido, base de warning claro. |
+| `--brand-yellow-soft`   | `oklch(96% 0.05 95)`            | Fundo amarelo sutil.                       |
 
 ### Tema claro (`:root`)
 
-| Token | Valor | Papel visual |
-|---|---|---|
-| `--background` | `oklch(99.2% 0.003 264)` | Fundo global. |
-| `--foreground` | `oklch(18% 0.025 264)` | Texto principal. |
-| `--surface` | `oklch(98.621% 0.00693 248.267)` | Preenchimento sutil de blocos; CSS indica aprox. `#eef2fa`. |
-| `--surface-foreground` | `oklch(18% 0.025 264)` | Texto sobre surface. |
-| `--shell` | `oklch(95.8% 0.008 264)` | Moldura externa e fundo da sidebar. |
-| `--shell-foreground` | `oklch(22% 0.03 264)` | Texto da moldura. |
-| `--canvas` | `oklch(100% 0 0)` | Janela branca do conteúdo principal. |
-| `--canvas-foreground` | `oklch(18% 0.025 264)` | Texto sobre canvas. |
-| `--card`, `--popover` | `oklch(100% 0 0)` | Superfícies de cards e popovers. |
-| `--card-foreground`, `--popover-foreground` | `oklch(18% 0.025 264)` | Texto nessas superfícies. |
-| `--primary` | `var(--brand-blue)` | Ação/seleção principal. |
-| `--primary-foreground` | `oklch(99% 0.005 264)` | Texto sobre primary. |
-| `--primary-soft` | `var(--brand-blue-soft)` | Fundo azul suave. |
-| `--secondary` | `oklch(95.5% 0.008 264)` | Ação/fundo neutro secundário. |
-| `--secondary-foreground` | `oklch(22% 0.03 264)` | Conteúdo secundário. |
-| `--muted` | `oklch(96.5% 0.006 264)` | Fundo neutro atenuado. |
-| `--muted-foreground` | `oklch(48% 0.022 264)` | Descrições, metadados, placeholders e ícones secundários. |
-| `--accent` | `var(--brand-yellow)` | Acento de marca e realce de primitives. |
-| `--accent-foreground` | `oklch(22% 0.04 86)` | Conteúdo sobre accent. |
-| `--accent-soft` | `var(--brand-yellow-soft)` | Acento suave. |
-| `--destructive` | `oklch(58% 0.21 27)` | Erro e ação destrutiva. |
-| `--destructive-foreground` | `oklch(99% 0.005 264)` | Texto sobre destructive sólido. |
-| `--destructive-soft` | `oklch(96% 0.03 27)` | Fundo de erro suave. |
-| `--success` | `oklch(56% 0.13 152)` | Estado positivo. |
-| `--success-foreground` | `oklch(99% 0.005 264)` | Texto sobre success sólido. |
-| `--success-soft` | `oklch(95% 0.04 152)` | Fundo de sucesso suave. |
-| `--warning` | `var(--brand-yellow-strong)` | Estado de aviso. |
-| `--warning-foreground` | `oklch(30% 0.08 82)` | Texto sobre warning claro. |
-| `--warning-soft` | `var(--brand-yellow-soft)` | Fundo de aviso. |
-| `--border` | `oklch(92% 0.01 264)` | Bordas e divisores sutis. |
-| `--border-strong` | `oklch(86% 0.014 264)` | Bordas de maior contraste e scrollbar. |
-| `--input` | `oklch(92% 0.01 264)` | Contorno de controles de formulário. |
-| `--ring` | `oklch(55% 0.13 263.91)` | Foco visível. |
+| Token                                       | Valor                            | Papel visual                                                |
+| ------------------------------------------- | -------------------------------- | ----------------------------------------------------------- |
+| `--background`                              | `oklch(99.2% 0.003 264)`         | Fundo global.                                               |
+| `--foreground`                              | `oklch(18% 0.025 264)`           | Texto principal.                                            |
+| `--surface`                                 | `oklch(98.621% 0.00693 248.267)` | Preenchimento sutil de blocos; CSS indica aprox. `#eef2fa`. |
+| `--surface-foreground`                      | `oklch(18% 0.025 264)`           | Texto sobre surface.                                        |
+| `--shell`                                   | `oklch(95.8% 0.008 264)`         | Moldura externa e fundo da sidebar.                         |
+| `--shell-foreground`                        | `oklch(22% 0.03 264)`            | Texto da moldura.                                           |
+| `--canvas`                                  | `oklch(100% 0 0)`                | Janela branca do conteúdo principal.                        |
+| `--canvas-foreground`                       | `oklch(18% 0.025 264)`           | Texto sobre canvas.                                         |
+| `--card`, `--popover`                       | `oklch(100% 0 0)`                | Superfícies de cards e popovers.                            |
+| `--card-foreground`, `--popover-foreground` | `oklch(18% 0.025 264)`           | Texto nessas superfícies.                                   |
+| `--primary`                                 | `var(--brand-blue)`              | Ação/seleção principal.                                     |
+| `--primary-foreground`                      | `oklch(99% 0.005 264)`           | Texto sobre primary.                                        |
+| `--primary-soft`                            | `var(--brand-blue-soft)`         | Fundo azul suave.                                           |
+| `--secondary`                               | `oklch(95.5% 0.008 264)`         | Ação/fundo neutro secundário.                               |
+| `--secondary-foreground`                    | `oklch(22% 0.03 264)`            | Conteúdo secundário.                                        |
+| `--muted`                                   | `oklch(96.5% 0.006 264)`         | Fundo neutro atenuado.                                      |
+| `--muted-foreground`                        | `oklch(48% 0.022 264)`           | Descrições, metadados, placeholders e ícones secundários.   |
+| `--accent`                                  | `var(--brand-yellow)`            | Acento de marca e realce de primitives.                     |
+| `--accent-foreground`                       | `oklch(22% 0.04 86)`             | Conteúdo sobre accent.                                      |
+| `--accent-soft`                             | `var(--brand-yellow-soft)`       | Acento suave.                                               |
+| `--destructive`                             | `oklch(58% 0.21 27)`             | Erro e ação destrutiva.                                     |
+| `--destructive-foreground`                  | `oklch(99% 0.005 264)`           | Texto sobre destructive sólido.                             |
+| `--destructive-soft`                        | `oklch(96% 0.03 27)`             | Fundo de erro suave.                                        |
+| `--success`                                 | `oklch(56% 0.13 152)`            | Estado positivo.                                            |
+| `--success-foreground`                      | `oklch(99% 0.005 264)`           | Texto sobre success sólido.                                 |
+| `--success-soft`                            | `oklch(95% 0.04 152)`            | Fundo de sucesso suave.                                     |
+| `--warning`                                 | `var(--brand-yellow-strong)`     | Estado de aviso.                                            |
+| `--warning-foreground`                      | `oklch(30% 0.08 82)`             | Texto sobre warning claro.                                  |
+| `--warning-soft`                            | `var(--brand-yellow-soft)`       | Fundo de aviso.                                             |
+| `--border`                                  | `oklch(92% 0.01 264)`            | Bordas e divisores sutis.                                   |
+| `--border-strong`                           | `oklch(86% 0.014 264)`           | Bordas de maior contraste e scrollbar.                      |
+| `--input`                                   | `oklch(92% 0.01 264)`            | Contorno de controles de formulário.                        |
+| `--ring`                                    | `oklch(55% 0.13 263.91)`         | Foco visível.                                               |
 
 ### Tema escuro (`.dark`)
 
-| Token | Valor |
-|---|---|
-| `--background` | `oklch(15% 0.022 264)` |
-| `--foreground` | `oklch(96% 0.006 264)` |
-| `--surface` | `oklch(19% 0.025 264)` |
-| `--surface-foreground` | `oklch(96% 0.006 264)` |
-| `--shell` | `oklch(12.5% 0.02 264)` |
-| `--shell-foreground` | `oklch(92% 0.006 264)` |
-| `--canvas` | `oklch(19.5% 0.026 264)` |
-| `--canvas-foreground` | `oklch(96% 0.006 264)` |
-| `--card`, `--popover` | `oklch(20% 0.028 264)` |
-| `--card-foreground`, `--popover-foreground` | `oklch(96% 0.006 264)` |
-| `--primary` | `oklch(65% 0.15 263.91)` |
-| `--primary-foreground` | `oklch(15% 0.025 264)` |
-| `--primary-soft` | `oklch(28% 0.08 263.91)` |
-| `--secondary` | `oklch(24% 0.03 264)` |
-| `--secondary-foreground` | `oklch(96% 0.006 264)` |
-| `--muted` | `oklch(22% 0.025 264)` |
-| `--muted-foreground` | `oklch(68% 0.018 264)` |
-| `--accent` | `oklch(82% 0.165 86)` |
-| `--accent-foreground` | `oklch(18% 0.04 86)` |
-| `--accent-soft` | `oklch(28% 0.07 86)` |
-| `--destructive` | `oklch(65% 0.2 27)` |
-| `--destructive-foreground` | `oklch(96% 0.006 264)` |
-| `--destructive-soft` | `oklch(28% 0.08 27)` |
-| `--success` | `oklch(68% 0.14 152)` |
-| `--success-foreground` | `oklch(15% 0.025 264)` |
-| `--success-soft` | `oklch(26% 0.05 152)` |
-| `--warning` | `oklch(75% 0.16 86)` |
-| `--warning-foreground` | `oklch(84% 0.06 92)` |
-| `--warning-soft` | `oklch(28% 0.07 86)` |
-| `--border`, `--input` | `oklch(26% 0.028 264)` |
-| `--border-strong` | `oklch(34% 0.03 264)` |
-| `--ring` | `oklch(65% 0.15 263.91)` |
+| Token                                       | Valor                    |
+| ------------------------------------------- | ------------------------ |
+| `--background`                              | `oklch(15% 0.022 264)`   |
+| `--foreground`                              | `oklch(96% 0.006 264)`   |
+| `--surface`                                 | `oklch(19% 0.025 264)`   |
+| `--surface-foreground`                      | `oklch(96% 0.006 264)`   |
+| `--shell`                                   | `oklch(12.5% 0.02 264)`  |
+| `--shell-foreground`                        | `oklch(92% 0.006 264)`   |
+| `--canvas`                                  | `oklch(19.5% 0.026 264)` |
+| `--canvas-foreground`                       | `oklch(96% 0.006 264)`   |
+| `--card`, `--popover`                       | `oklch(20% 0.028 264)`   |
+| `--card-foreground`, `--popover-foreground` | `oklch(96% 0.006 264)`   |
+| `--primary`                                 | `oklch(65% 0.15 263.91)` |
+| `--primary-foreground`                      | `oklch(15% 0.025 264)`   |
+| `--primary-soft`                            | `oklch(28% 0.08 263.91)` |
+| `--secondary`                               | `oklch(24% 0.03 264)`    |
+| `--secondary-foreground`                    | `oklch(96% 0.006 264)`   |
+| `--muted`                                   | `oklch(22% 0.025 264)`   |
+| `--muted-foreground`                        | `oklch(68% 0.018 264)`   |
+| `--accent`                                  | `oklch(82% 0.165 86)`    |
+| `--accent-foreground`                       | `oklch(18% 0.04 86)`     |
+| `--accent-soft`                             | `oklch(28% 0.07 86)`     |
+| `--destructive`                             | `oklch(65% 0.2 27)`      |
+| `--destructive-foreground`                  | `oklch(96% 0.006 264)`   |
+| `--destructive-soft`                        | `oklch(28% 0.08 27)`     |
+| `--success`                                 | `oklch(68% 0.14 152)`    |
+| `--success-foreground`                      | `oklch(15% 0.025 264)`   |
+| `--success-soft`                            | `oklch(26% 0.05 152)`    |
+| `--warning`                                 | `oklch(75% 0.16 86)`     |
+| `--warning-foreground`                      | `oklch(84% 0.06 92)`     |
+| `--warning-soft`                            | `oklch(28% 0.07 86)`     |
+| `--border`, `--input`                       | `oklch(26% 0.028 264)`   |
+| `--border-strong`                           | `oklch(34% 0.03 264)`    |
+| `--ring`                                    | `oklch(65% 0.15 263.91)` |
 
 No modo escuro, a moldura fica mais escura que o canvas, preservando a leitura da área de trabalho como janela. As definições `--brand-*` continuam em `:root`; os tokens semânticos mudam no bloco `.dark`.
 
 ### Gráficos e tokens da sidebar
 
-| Token | Claro | Escuro |
-|---|---|---|
-| `--chart-1` | `var(--brand-blue)` | `oklch(65% 0.15 263.91)` |
-| `--chart-2` | `var(--brand-yellow)` | `oklch(82% 0.165 86)` |
-| `--chart-3` | `oklch(60% 0.13 200)` | `oklch(70% 0.13 200)` |
-| `--chart-4` | `oklch(56% 0.13 152)` | `oklch(68% 0.14 152)` |
-| `--chart-5` | `oklch(58% 0.21 27)` | `oklch(65% 0.2 27)` |
-| `--sidebar` | `var(--shell)` | `var(--shell)` |
-| `--sidebar-foreground` | `var(--shell-foreground)` | `var(--shell-foreground)` |
-| `--sidebar-primary` | `var(--brand-blue)` | `oklch(65% 0.15 263.91)` |
-| `--sidebar-primary-foreground` | `oklch(99% 0.005 264)` | `oklch(15% 0.025 264)` |
-| `--sidebar-accent` | `oklch(92% 0.014 264)` | `oklch(17.5% 0.024 264)` |
-| `--sidebar-accent-foreground` | `oklch(22% 0.03 264)` | `oklch(92% 0.006 264)` |
-| `--sidebar-border` | `oklch(90% 0.014 264)` | `oklch(21% 0.026 264)` |
-| `--sidebar-ring` | `var(--brand-blue)` | `oklch(65% 0.15 263.91)` |
+| Token                          | Claro                     | Escuro                    |
+| ------------------------------ | ------------------------- | ------------------------- |
+| `--chart-1`                    | `var(--brand-blue)`       | `oklch(65% 0.15 263.91)`  |
+| `--chart-2`                    | `var(--brand-yellow)`     | `oklch(82% 0.165 86)`     |
+| `--chart-3`                    | `oklch(60% 0.13 200)`     | `oklch(70% 0.13 200)`     |
+| `--chart-4`                    | `oklch(56% 0.13 152)`     | `oklch(68% 0.14 152)`     |
+| `--chart-5`                    | `oklch(58% 0.21 27)`      | `oklch(65% 0.2 27)`       |
+| `--sidebar`                    | `var(--shell)`            | `var(--shell)`            |
+| `--sidebar-foreground`         | `var(--shell-foreground)` | `var(--shell-foreground)` |
+| `--sidebar-primary`            | `var(--brand-blue)`       | `oklch(65% 0.15 263.91)`  |
+| `--sidebar-primary-foreground` | `oklch(99% 0.005 264)`    | `oklch(15% 0.025 264)`    |
+| `--sidebar-accent`             | `oklch(92% 0.014 264)`    | `oklch(17.5% 0.024 264)`  |
+| `--sidebar-accent-foreground`  | `oklch(22% 0.03 264)`     | `oklch(92% 0.006 264)`    |
+| `--sidebar-border`             | `oklch(90% 0.014 264)`    | `oklch(21% 0.026 264)`    |
+| `--sidebar-ring`               | `var(--brand-blue)`       | `oklch(65% 0.15 263.91)`  |
 
 Papéis práticos: primary para ação, navegação ativa e links; muted-foreground para hierarquia secundária; combinações `*-soft` + texto colorido para estados discretos; versões sólidas para destaque. A seleção de texto usa amarelo de marca com texto `oklch(22% 0.04 86)`. Não depender somente de cor para comunicar estados.
 
 ## 3. Tipografia
 
-| Token/função | Família e uso |
-|---|---|
-| `--font-sans` | Inter, system-ui, sans-serif; interface e leitura. Importa pesos 400, 500, 600 e 700. |
-| `--font-display` | JetBrains Mono, ui-monospace, monospace; títulos e métricas, tracking `-0.04em`. |
-| `--font-mono` | JetBrains Mono; identificadores e números tabulares. |
+| Token/função     | Família e uso                                                                         |
+| ---------------- | ------------------------------------------------------------------------------------- |
+| `--font-sans`    | Inter, system-ui, sans-serif; interface e leitura. Importa pesos 400, 500, 600 e 700. |
+| `--font-display` | JetBrains Mono, ui-monospace, monospace; títulos e métricas, tracking `-0.04em`.      |
+| `--font-mono`    | JetBrains Mono; identificadores e números tabulares.                                  |
 
 Google Fonts carrega Inter e JetBrains Mono nos pesos 400/500/600/700. OpenType: `html` usa `cv11`, `ss01`, `ss03`; corpo usa `cv11`, `ss01`; display usa `ss01`, `ss02`, `calt`, `zero`; mono usa `tnum`, `zero`.
 
-| Elemento | Estilo observado |
-|---|---|
-| H1 | 28 px, peso 500, line-height 1.05, display. |
-| H2 de seção | 15 px, peso 500, line-height tight, display. |
-| Título de dialog | 18 px, peso 600. |
-| Corpo e controles | 14 px. |
-| Descrição/hint | 12–14 px, muted. |
-| Eyebrow | 11 px, 600, uppercase, tracking 0.08em. |
-| Label de campo | 11 px, 600, uppercase, tracking 0.06em. |
-| Label da sidebar | 10 px, 600, uppercase, tracking 0.1em. |
-| Métrica de card | 24 px, display. |
+| Elemento          | Estilo observado                             |
+| ----------------- | -------------------------------------------- |
+| H1                | 28 px, peso 500, line-height 1.05, display.  |
+| H2 de seção       | 15 px, peso 500, line-height tight, display. |
+| Título de dialog  | 18 px, peso 600.                             |
+| Corpo e controles | 14 px.                                       |
+| Descrição/hint    | 12–14 px, muted.                             |
+| Eyebrow           | 11 px, 600, uppercase, tracking 0.08em.      |
+| Label de campo    | 11 px, 600, uppercase, tracking 0.06em.      |
+| Label da sidebar  | 10 px, 600, uppercase, tracking 0.1em.       |
+| Métrica de card   | 24 px, display.                              |
 
 Não há escala tipográfica customizada no tema; os tamanhos acima são valores/utilitários explícitos observados nos componentes.
 
@@ -156,19 +156,19 @@ Base `--radius: 0.5rem` (8 px). `--radius-sm = radius - 4px` (4 px); `--radius-m
 
 Todas usam a tinta azul `oklch(39.341% 0.16812 263.91)` em opacidades baixas.
 
-| Token | Valor CSS |
-|---|---|
-| `--shadow-hairline` | `0 0 0 1px oklch(39.341% 0.16812 263.91 / 8%)` |
-| `--shadow-card` | `0 2px 8px -2px oklch(39.341% 0.16812 263.91 / 5%), 0 0 0 1px oklch(39.341% 0.16812 263.91 / 5%)` |
-| `--shadow-elevated` | `0 8px 24px -6px oklch(39.341% 0.16812 263.91 / 9%), 0 0 0 1px oklch(39.341% 0.16812 263.91 / 5%)` |
-| `--shadow-2xs` | `0 1px 2px oklch(39.341% 0.16812 263.91 / 4%)` |
-| `--shadow-xs` | `0 2px 4px -1px oklch(39.341% 0.16812 263.91 / 5%)` |
-| `--shadow-sm` | `0 2px 6px -1px oklch(39.341% 0.16812 263.91 / 6%), 0 1px 2px -1px oklch(39.341% 0.16812 263.91 / 4%)` |
-| `--shadow` | Alias de `--shadow-sm` |
-| `--shadow-md` | `0 6px 14px -3px oklch(39.341% 0.16812 263.91 / 7%), 0 2px 5px -2px oklch(39.341% 0.16812 263.91 / 5%)` |
-| `--shadow-lg` | `0 12px 28px -6px oklch(39.341% 0.16812 263.91 / 9%), 0 4px 10px -4px oklch(39.341% 0.16812 263.91 / 5%)` |
-| `--shadow-xl` | `0 20px 40px -8px oklch(39.341% 0.16812 263.91 / 11%), 0 8px 16px -8px oklch(39.341% 0.16812 263.91 / 6%)` |
-| `--shadow-2xl` | `0 32px 64px -12px oklch(39.341% 0.16812 263.91 / 14%)` |
+| Token               | Valor CSS                                                                                                  |
+| ------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `--shadow-hairline` | `0 0 0 1px oklch(39.341% 0.16812 263.91 / 8%)`                                                             |
+| `--shadow-card`     | `0 2px 8px -2px oklch(39.341% 0.16812 263.91 / 5%), 0 0 0 1px oklch(39.341% 0.16812 263.91 / 5%)`          |
+| `--shadow-elevated` | `0 8px 24px -6px oklch(39.341% 0.16812 263.91 / 9%), 0 0 0 1px oklch(39.341% 0.16812 263.91 / 5%)`         |
+| `--shadow-2xs`      | `0 1px 2px oklch(39.341% 0.16812 263.91 / 4%)`                                                             |
+| `--shadow-xs`       | `0 2px 4px -1px oklch(39.341% 0.16812 263.91 / 5%)`                                                        |
+| `--shadow-sm`       | `0 2px 6px -1px oklch(39.341% 0.16812 263.91 / 6%), 0 1px 2px -1px oklch(39.341% 0.16812 263.91 / 4%)`     |
+| `--shadow`          | Alias de `--shadow-sm`                                                                                     |
+| `--shadow-md`       | `0 6px 14px -3px oklch(39.341% 0.16812 263.91 / 7%), 0 2px 5px -2px oklch(39.341% 0.16812 263.91 / 5%)`    |
+| `--shadow-lg`       | `0 12px 28px -6px oklch(39.341% 0.16812 263.91 / 9%), 0 4px 10px -4px oklch(39.341% 0.16812 263.91 / 5%)`  |
+| `--shadow-xl`       | `0 20px 40px -8px oklch(39.341% 0.16812 263.91 / 11%), 0 8px 16px -8px oklch(39.341% 0.16812 263.91 / 6%)` |
+| `--shadow-2xl`      | `0 32px 64px -12px oklch(39.341% 0.16812 263.91 / 14%)`                                                    |
 
 ### Espaçamento e layout
 
@@ -276,21 +276,21 @@ O tema é publicado para Tailwind v4 usando `@theme inline`; `components.json` d
 
 ```css
 :root {
-  --radius: 0.5rem;
-  --background: oklch(99.2% 0.003 264);
-  --foreground: oklch(18% 0.025 264);
-  --primary: oklch(39.341% 0.16812 263.91);
-  --primary-foreground: oklch(99% 0.005 264);
-  --border: oklch(92% 0.01 264);
-  --ring: oklch(55% 0.13 263.91);
+   --radius: 0.5rem;
+   --background: oklch(99.2% 0.003 264);
+   --foreground: oklch(18% 0.025 264);
+   --primary: oklch(39.341% 0.16812 263.91);
+   --primary-foreground: oklch(99% 0.005 264);
+   --border: oklch(92% 0.01 264);
+   --ring: oklch(55% 0.13 263.91);
 }
 .dark {
-  --background: oklch(15% 0.022 264);
-  --foreground: oklch(96% 0.006 264);
-  --primary: oklch(65% 0.15 263.91);
-  --primary-foreground: oklch(15% 0.025 264);
-  --border: oklch(26% 0.028 264);
-  --ring: oklch(65% 0.15 263.91);
+   --background: oklch(15% 0.022 264);
+   --foreground: oklch(96% 0.006 264);
+   --primary: oklch(65% 0.15 263.91);
+   --primary-foreground: oklch(15% 0.025 264);
+   --border: oklch(26% 0.028 264);
+   --ring: oklch(65% 0.15 263.91);
 }
 ```
 
