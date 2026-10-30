@@ -22,4 +22,12 @@ describe("filtrarProcessos", () => {
    it("encontra pelo código", () => {
       expect(filtrarProcessos(processos, { ...vazio, busca: "K.04" }).map(p => p.id)).toEqual(["K.04"]);
    });
+   it("combina o status existente com setor e busca sem mudar a situação calculada", () => {
+      const original = processos.find(p => p.responsaveis.includes("ti-sistemas"))!;
+      const emAndamento = { ...original, status: "em-andamento" as const };
+      const r = filtrarProcessos([emAndamento], { ...vazio, setores: ["ti-sistemas"], busca: original.id, status: ["em-andamento"] });
+      expect(r).toEqual([emAndamento]);
+      expect(r[0].urgencia).toBe(original.urgencia);
+      expect(filtrarProcessos([emAndamento], { ...vazio, status: ["concluido"] })).toEqual([]);
+   });
 });

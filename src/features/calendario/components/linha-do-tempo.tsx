@@ -4,20 +4,24 @@
  * rematrícula, para enxergar o que cada entrega está sustentando.
  */
 import { addDays, addMonths, startOfMonth } from "date-fns";
-import { motion } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { Segmented } from "@/components/core/segmented";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ProcessoLinha } from "@/features/calendario/components/processo-linha";
+import { agruparMarcos } from "@/features/calendario/lib/marcos";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { nomeSetor, SETORES, URGENCIA_LABEL } from "@/features/calendario/data/catalogo";
 import { usePreferenciasStore } from "@/features/calendario/stores/preferencias.store";
 import { dataCurta, diasEntre, intervalo, mesAbreviado, paraData, paraIso } from "@/features/calendario/lib/datas";
 import type { Evento, Processo, Urgencia } from "@/features/calendario/types/calendario.schema";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-const LARGURA_ROTULO = 196;
-const ALTURA_LINHA = 36;
-const ALTURA_EVENTO = 16;
+const ALTURA_LINHA = 52;
+const ALTURA_EVENTO = 44;
 
 type Zoom = "compacto" | "normal" | "detalhado";
 const PX_POR_DIA: Record<Zoom, number> = { compacto: 4, normal: 7, detalhado: 12 };
@@ -65,7 +69,17 @@ function empilhar(eventos: Evento[]) {
 }
 
 export function LinhaDoTempo({ processos, eventos, hoje, onAbrir }: LinhaDoTempoProps) {
-   const [zoom, setZoom] = useState<Zoom>("normal");
+   const isMobile = useIsMobile();
+   const LARGURA_ROTULO = isMobile ? 144 : 196;
+   const [params, setParams] = useSearchParams();
+   const zoomParam = params.get("zoom");
+   const zoom: Zoom = zoomParam === "compacto" || zoomParam === "detalhado" ? zoomParam : "normal";
+   const setZoom = (valor: Zoom) =>
+      setParams(prev => {
+         const next = new URLSearchParams(prev);
+         next.set("zoom", valor);
+         return next;
+      });
    const meuSetor = usePreferenciasStore(s => s.meuSetor);
    const rolagem = useRef<HTMLDivElement>(null);
    const pxDia = PX_POR_DIA[zoom];
@@ -105,7 +119,8 @@ export function LinhaDoTempo({ processos, eventos, hoje, onAbrir }: LinhaDoTempo
    useEffect(() => {
       const el = rolagem.current;
       if (!el) return;
-      const alvo = hojeVisivel ? x(hoje) : 0;
+      const mesSelecionado = params.get("mes");
+      const alvo = mesSelecionado && /^\d{4}-(0[1-9]|1[0-2])$/.test(mesSelecionado) ? x(`${mesSelecionado}-01`) : hojeVisivel ? x(hoje) : 0;
       el.scrollLeft = Math.max(0, alvo - 120);
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [zoom, inicio]);
@@ -129,21 +144,39 @@ export function LinhaDoTempo({ processos, eventos, hoje, onAbrir }: LinhaDoTempo
                   Rematrícula
                </span>
             </div>
-            <Segmented
-               layoutId="zoom-linha-do-tempo"
-               ariaLabel="Zoom da linha do tempo"
-               size="sm"
-               value={zoom}
-               onChange={setZoom}
-               opcoes={[
-                  { value: "compacto", label: "Semestre" },
-                  { value: "normal", label: "Normal" },
-                  { value: "detalhado", label: "Detalhado" },
-               ]}
-            />
+            <div className="flex flex-wrap items-center gap-2">
+               <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                     if (rolagem.current) rolagem.current.scrollLeft = Math.max(0, x(hoje) - 120);
+                  }}
+                  disabled={!hojeVisivel}
+               >
+                  Ir para hoje
+               </Button>
+               <Segmented
+                  layoutId="zoom-linha-do-tempo"
+                  ariaLabel="Zoom da linha do tempo"
+                  size="sm"
+                  value={zoom}
+                  onChange={setZoom}
+                  opcoes={[
+                     { value: "compacto", label: "Semestre" },
+                     { value: "normal", label: "Normal" },
+                     { value: "detalhado", label: "Detalhado" },
+                  ]}
+               />
+            </div>
          </div>
 
-         <div ref={rolagem} className="relative overflow-x-auto rounded-xl border bg-card shadow-sm">
+         <div
+            ref={rolagem}
+            role="region"
+            aria-label="Prazos por setor, com rolagem horizontal e vertical"
+            tabIndex={0}
+            className="relative max-h-[65dvh] min-w-0 scroll-pt-10 overflow-auto rounded-xl border bg-card"
+         >
             <div className="relative" style={{ width: largura + LARGURA_ROTULO }}>
                {/* Meses */}
                <div className="sticky top-0 z-20 flex border-b bg-card" style={{ height: 34 }}>
@@ -173,11 +206,13 @@ export function LinhaDoTempo({ processos, eventos, hoje, onAbrir }: LinhaDoTempo
                      {faixas.map(({ evento, faixa }) => {
                         const dias = diasEntre(evento.inicio, evento.fim ?? evento.inicio) + 1;
                         return (
-                           <Tooltip key={evento.id}>
-                              <TooltipTrigger asChild>
-                                 <div
+                           <Popover key={evento.id}>
+                              <PopoverTrigger asChild>
+                                 <button
+                                    type="button"
+                                    aria-label={`${evento.nome}, ${intervalo(evento.inicio, evento.fim)}`}
                                     className={cn(
-                                       "absolute truncate rounded-[4px] px-1 text-[10px] font-medium leading-4",
+                                       "absolute truncate rounded-md px-2 text-left text-xs font-medium",
                                        evento.tipo === "rematricula"
                                           ? "bg-primary-soft text-primary ring-1 ring-primary/40 ring-inset"
                                           : "bg-accent-soft text-accent-foreground ring-1 ring-accent ring-inset",
@@ -190,13 +225,13 @@ export function LinhaDoTempo({ processos, eventos, hoje, onAbrir }: LinhaDoTempo
                                     }}
                                  >
                                     {dias * pxDia > 70 ? evento.nome : ""}
-                                 </div>
-                              </TooltipTrigger>
-                              <TooltipContent className="max-w-xs">
+                                 </button>
+                              </PopoverTrigger>
+                              <PopoverContent className="max-w-xs text-sm">
                                  <p className="font-medium">{evento.nome}</p>
                                  <p className="opacity-80">{intervalo(evento.inicio, evento.fim)}</p>
-                              </TooltipContent>
-                           </Tooltip>
+                              </PopoverContent>
+                           </Popover>
                         );
                      })}
                   </div>
@@ -239,37 +274,14 @@ export function LinhaDoTempo({ processos, eventos, hoje, onAbrir }: LinhaDoTempo
                            )}
                            style={{ width: LARGURA_ROTULO }}
                         >
-                           <span className="truncate text-[12.5px] font-medium">{nomeSetor(linha.setor)}</span>
+                           <span className="line-clamp-2 text-xs font-medium" title={nomeSetor(linha.setor)}>
+                              {nomeSetor(linha.setor)}
+                           </span>
                            <span className="font-mono text-[11px] tabular text-muted-foreground">{linha.itens.length}</span>
                         </div>
                         <div className="relative" style={{ width: largura }}>
-                           {linha.itens.map(p => (
-                              <Tooltip key={p.id}>
-                                 <TooltipTrigger asChild>
-                                    <motion.button
-                                       type="button"
-                                       onClick={() => onAbrir(p.id)}
-                                       whileHover={{ scale: 1.35 }}
-                                       whileTap={{ scale: 0.9 }}
-                                       aria-label={`${p.id}: ${p.nome}, prazo ${dataCurta(p.prazo)}`}
-                                       className={cn(
-                                          "absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-card focus-visible:outline-none focus-visible:ring-ring",
-                                          COR_MARCADOR[p.urgencia],
-                                          p.dependencia === "trava" &&
-                                             p.urgencia !== "concluido" &&
-                                             "outline outline-1 outline-offset-1 outline-foreground/15",
-                                       )}
-                                       style={{ left: x(p.prazo as string) + pxDia / 2 }}
-                                    />
-                                 </TooltipTrigger>
-                                 <TooltipContent className="max-w-xs">
-                                    <p className="font-mono text-[11px] opacity-80">
-                                       {p.id} · {dataCurta(p.prazo)}
-                                    </p>
-                                    <p className="font-medium">{p.nome}</p>
-                                    <p className="opacity-80">{URGENCIA_LABEL[p.urgencia]}</p>
-                                 </TooltipContent>
-                              </Tooltip>
+                           {agruparMarcos(linha.itens, inicio, pxDia).map(grupo => (
+                              <GrupoMarcos key={grupo.itens[0].id} grupo={grupo} setor={linha.setor} onAbrir={onAbrir} />
                            ))}
                         </div>
                      </div>
@@ -282,10 +294,123 @@ export function LinhaDoTempo({ processos, eventos, hoje, onAbrir }: LinhaDoTempo
                </div>
             </div>
          </div>
+         <details className="rounded-lg border px-4 py-3">
+            <summary className="cursor-pointer text-sm font-medium">Consultar os {eventos.length} eventos e períodos acadêmicos</summary>
+            <ul className="mt-3 grid gap-3">
+               {eventos.map(evento => (
+                  <li key={evento.id} className="grid gap-1 text-sm">
+                     <span>{evento.nome}</span>
+                     <span className="text-xs text-muted-foreground">{intervalo(evento.inicio, evento.fim)}</span>
+                  </li>
+               ))}
+            </ul>
+         </details>
          <p className="text-xs text-muted-foreground">
-            Arraste para o lado para ver o semestre inteiro. Pontos com contorno travam um evento acadêmico se atrasarem. Período:{" "}
-            {dataCurta(inicio)} a {dataCurta(paraIso(addDays(paraData(inicio), totalDias - 1)))}.
+            Role a região para consultar o semestre. Use Tab e as setas para navegar; os grupos com número abrem todos os prazos
+            sobrepostos. Pontos com contorno travam um evento acadêmico se atrasarem. Período: {dataCurta(inicio)} a{" "}
+            {dataCurta(paraIso(addDays(paraData(inicio), totalDias - 1)))}.
          </p>
       </div>
+   );
+}
+
+function GrupoMarcos({
+   grupo,
+   setor,
+   onAbrir,
+}: {
+   grupo: ReturnType<typeof agruparMarcos>[number];
+   setor: string;
+   onAbrir: (id: string) => void;
+}) {
+   const [open, setOpen] = useState(false);
+   const trigger = useRef<HTMLButtonElement>(null);
+   const abrindoDetalhe = useRef(false);
+   const primeiro = grupo.itens[0];
+   const ultimo = grupo.itens[grupo.itens.length - 1];
+   const periodo = intervalo(primeiro.prazo!, ultimo.prazo);
+   if (grupo.itens.length === 1)
+      return (
+         <Tooltip>
+            <TooltipTrigger asChild>
+               <button
+                  type="button"
+                  data-processo-id={primeiro.id}
+                  aria-label={`${primeiro.id}: ${primeiro.nome}, prazo ${dataCurta(primeiro.prazo)}, ${URGENCIA_LABEL[primeiro.urgencia]}`}
+                  onClick={() => onAbrir(primeiro.id)}
+                  className="absolute top-1/2 flex size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md hover:bg-muted"
+                  style={{ left: grupo.x }}
+               >
+                  <span
+                     className={cn(
+                        "size-3 rounded-full ring-2 ring-card",
+                        COR_MARCADOR[primeiro.urgencia],
+                        primeiro.dependencia === "trava" &&
+                           primeiro.urgencia !== "concluido" &&
+                           "outline outline-1 outline-offset-2 outline-foreground/40",
+                     )}
+                     aria-hidden
+                  />
+               </button>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-xs">
+               <p>
+                  {primeiro.id} · {dataCurta(primeiro.prazo)}
+               </p>
+               <p>{primeiro.nome}</p>
+               <p>{URGENCIA_LABEL[primeiro.urgencia]}</p>
+            </TooltipContent>
+         </Tooltip>
+      );
+   return (
+      <Popover
+         open={open}
+         onOpenChange={value => {
+            abrindoDetalhe.current = false;
+            setOpen(value);
+         }}
+      >
+         <PopoverTrigger asChild>
+            <button
+               ref={trigger}
+               type="button"
+               aria-label={`${grupo.itens.length} prazos agrupados, ${nomeSetor(setor)}, ${periodo}`}
+               className="absolute top-1/2 flex size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-md hover:bg-muted"
+               style={{ left: grupo.x }}
+            >
+               <span className="flex size-7 items-center justify-center rounded-full border bg-card text-xs font-semibold text-primary shadow-xs tabular-nums">
+                  {grupo.itens.length}
+               </span>
+            </button>
+         </PopoverTrigger>
+         <PopoverContent
+            className="w-[min(28rem,calc(100vw-2rem))] overflow-hidden p-0"
+            onCloseAutoFocus={event => {
+               if (abrindoDetalhe.current) event.preventDefault();
+            }}
+         >
+            <header className="border-b p-4">
+               <h3 className="text-sm font-semibold">
+                  {grupo.itens.length} prazos · {nomeSetor(setor)}
+               </h3>
+               <p className="mt-1 text-xs text-muted-foreground">{periodo}</p>
+            </header>
+            <div className="max-h-[45dvh] overflow-y-auto divide-y">
+               {grupo.itens.map(p => (
+                  <ProcessoLinha
+                     compacto
+                     key={p.id}
+                     processo={p}
+                     onAbrir={id => {
+                        abrindoDetalhe.current = true;
+                        trigger.current?.focus();
+                        setOpen(false);
+                        onAbrir(id);
+                     }}
+                  />
+               ))}
+            </div>
+         </PopoverContent>
+      </Popover>
    );
 }

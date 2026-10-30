@@ -18,17 +18,27 @@ interface SegmentedProps<T extends string> {
    ariaLabel: string;
    className?: string;
    size?: "sm" | "md";
+   disabled?: boolean;
 }
 
 /** Controle segmentado com pastilha animada (spring) entre as opções. */
-export function Segmented<T extends string>({ layoutId, opcoes, value, onChange, ariaLabel, className, size = "md" }: SegmentedProps<T>) {
+export function Segmented<T extends string>({
+   layoutId,
+   opcoes,
+   value,
+   onChange,
+   ariaLabel,
+   className,
+   size = "md",
+   disabled,
+}: SegmentedProps<T>) {
    return (
       <div
          role="radiogroup"
          aria-label={ariaLabel}
          className={cn("inline-flex w-fit max-w-full flex-wrap gap-1 rounded-lg bg-muted p-1", className)}
       >
-         {opcoes.map(opcao => {
+         {opcoes.map((opcao, index) => {
             const ativo = opcao.value === value;
             const Icon = opcao.icon;
             return (
@@ -37,11 +47,32 @@ export function Segmented<T extends string>({ layoutId, opcoes, value, onChange,
                   type="button"
                   role="radio"
                   aria-checked={ativo}
+                  disabled={disabled}
+                  tabIndex={ativo ? 0 : -1}
+                  onKeyDown={event => {
+                     const delta =
+                        event.key === "ArrowRight" || event.key === "ArrowDown"
+                           ? 1
+                           : event.key === "ArrowLeft" || event.key === "ArrowUp"
+                             ? -1
+                             : 0;
+                     if (!delta && event.key !== "Home" && event.key !== "End") return;
+                     event.preventDefault();
+                     const next =
+                        event.key === "Home"
+                           ? 0
+                           : event.key === "End"
+                             ? opcoes.length - 1
+                             : (index + delta + opcoes.length) % opcoes.length;
+                     onChange(opcoes[next].value);
+                     event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>("[role=radio]")[next]?.focus();
+                  }}
                   whileTap={press}
                   onClick={() => onChange(opcao.value)}
                   className={cn(
                      "relative inline-flex items-center gap-1.5 rounded-md font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                     size === "sm" ? "h-7 px-2.5 text-xs" : "h-8 px-3 text-[13px]",
+                     size === "sm" ? "min-h-9 px-2.5 text-xs" : "min-h-10 px-3 text-[13px]",
+                     "disabled:pointer-events-none disabled:opacity-50",
                      ativo ? "text-foreground" : "text-muted-foreground hover:text-foreground",
                   )}
                >

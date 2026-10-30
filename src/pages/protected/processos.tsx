@@ -1,5 +1,6 @@
 import { Download, Plus, SearchX } from "lucide-react";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
 import { Segmented } from "@/components/core/segmented";
@@ -45,7 +46,15 @@ function Conteudo({ agrupamento }: { agrupamento: Agrupamento }) {
 }
 
 export default function ProcessosPage() {
-   const [agrupamento, setAgrupamento] = useState<Agrupamento>("mes");
+   const [params, setParams] = useSearchParams();
+   const grupoParam = params.get("agrupar");
+   const agrupamento: Agrupamento = grupoParam === "setor" || grupoParam === "etapa" ? grupoParam : "mes";
+   const setAgrupamento = (valor: Agrupamento) =>
+      setParams(prev => {
+         const next = new URLSearchParams(prev);
+         next.set("agrupar", valor);
+         return next;
+      });
    const [novo, setNovo] = useState(false);
    const { visao } = useCalendario();
    const { filtros } = useFiltrosProcessos();
@@ -59,7 +68,7 @@ export default function ProcessosPage() {
    }
 
    return (
-      <div className="space-y-6">
+      <div className="space-y-4">
          <PageHeader
             eyebrow="Calendário operacional · Graduação 2027-1"
             title="Processos"
@@ -67,36 +76,34 @@ export default function ProcessosPage() {
             meta={<span className="tabular">{total} processos no calendário</span>}
             actions={
                <div className="flex items-center gap-2">
-                  <Button variant="outline" onClick={exportar} disabled={!filtrados.length}>
+                  <Button variant="outline" onClick={exportar} disabled={!filtrados.length} aria-label="Exportar processos filtrados">
                      <Download className="size-4" />
-                     <span className="hidden sm:inline">Exportar</span>
+                     <span>Exportar</span>
                   </Button>
-                  <Button onClick={() => setNovo(true)}>
+                  <Button onClick={() => setNovo(true)} aria-label="Incluir processo">
                      <Plus className="size-4" />
-                     <span className="hidden sm:inline">Incluir processo</span>
+                     <span>Incluir processo</span>
                   </Button>
                </div>
             }
          />
-         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <FiltrosProcessos />
-            <div className="flex items-center gap-3">
-               <span className="text-xs text-muted-foreground tabular">
-                  {filtrados.length} de {total}
-               </span>
-               <Segmented
-                  layoutId="agrupar-processos"
-                  ariaLabel="Agrupar por"
-                  size="sm"
-                  value={agrupamento}
-                  onChange={setAgrupamento}
-                  opcoes={[
-                     { value: "mes", label: "Por mês" },
-                     { value: "etapa", label: "Por etapa" },
-                     { value: "setor", label: "Por setor" },
-                  ]}
-               />
-            </div>
+         <FiltrosProcessos />
+         <div className="flex flex-wrap items-center justify-between gap-3">
+            <span role="status" className="text-xs text-muted-foreground tabular-nums">
+               {filtrados.length} de {total} processos
+            </span>
+            <Segmented
+               layoutId="agrupar-processos"
+               ariaLabel="Agrupar por"
+               size="sm"
+               value={agrupamento}
+               onChange={setAgrupamento}
+               opcoes={[
+                  { value: "mes", label: "Por mês" },
+                  { value: "etapa", label: "Por etapa" },
+                  { value: "setor", label: "Por setor" },
+               ]}
+            />
          </div>
          <ComDados>
             <Conteudo agrupamento={agrupamento} />

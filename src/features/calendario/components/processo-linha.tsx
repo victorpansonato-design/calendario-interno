@@ -6,6 +6,7 @@ import { nomeBloco } from "@/features/calendario/data/catalogo";
 import { dataComSemana } from "@/features/calendario/lib/datas";
 import type { Processo } from "@/features/calendario/types/calendario.schema";
 import { pressSubtle } from "@/lib/motion";
+import { useProcessoAberto } from "@/features/calendario/hooks/use-processo-aberto";
 import { cn } from "@/lib/utils";
 
 interface ProcessoLinhaProps {
@@ -13,6 +14,7 @@ interface ProcessoLinhaProps {
    onAbrir: (id: string) => void;
    /** Esconde a etapa quando a lista já está agrupada por ela. */
    ocultarEtapa?: boolean;
+   compacto?: boolean;
 }
 
 function Prazo({ processo }: { processo: Processo }) {
@@ -24,16 +26,22 @@ function Prazo({ processo }: { processo: Processo }) {
 }
 
 /** Item de lista clicável: o que é, de quem é, quando vence. */
-export function ProcessoLinha({ processo, onAbrir, ocultarEtapa }: ProcessoLinhaProps) {
+export function ProcessoLinha({ processo, onAbrir, ocultarEtapa, compacto }: ProcessoLinhaProps) {
    const concluido = processo.status === "concluido";
+   const { aberto } = useProcessoAberto();
    return (
       <motion.button
          type="button"
+         data-processo-id={processo.id}
+         aria-current={aberto === processo.id ? "true" : undefined}
          whileTap={pressSubtle}
          onClick={() => onAbrir(processo.id)}
-         className="group flex w-full items-start gap-4 px-4 py-3 text-left transition-colors duration-150 hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:outline-none"
+         className={cn(
+            "group flex w-full items-start gap-3 px-4 py-3.5 text-left transition-colors duration-150 hover:bg-muted/50 focus-visible:bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
+            aberto === processo.id && "bg-primary-soft",
+         )}
       >
-         <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-start sm:gap-4">
+         <div className={cn("flex min-w-0 flex-1 flex-col gap-2", !compacto && "sm:flex-row sm:items-start sm:gap-4")}>
             <div className="min-w-0 flex-1">
                <div className="flex items-baseline gap-2">
                   <span className="shrink-0 font-mono text-[12px] font-medium tabular text-primary">{processo.id}</span>
@@ -54,7 +62,7 @@ export function ProcessoLinha({ processo, onAbrir, ocultarEtapa }: ProcessoLinha
                   {processo.prazoProposto ? <PrazoPropostoTag /> : null}
                </div>
             </div>
-            <div className="flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1.5 sm:flex-col sm:items-end">
+            <div className={cn("flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1.5", !compacto && "sm:flex-col sm:items-end")}>
                <Prazo processo={processo} />
                <div className="flex items-center gap-1.5">
                   {processo.status === "em-andamento" ? <StatusBadge status={processo.status} /> : null}

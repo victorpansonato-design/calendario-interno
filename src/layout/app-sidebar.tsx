@@ -245,7 +245,7 @@ function PreferencesMenu({ collapsed }: { collapsed: boolean }) {
                         className="flex min-w-0 flex-1 items-center gap-2"
                      >
                         <span className="text-left">Preferências</span>
-                        <span className="ml-auto inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.06em] text-muted-foreground/80">
+                        <span className="ml-auto inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.06em] text-muted-foreground">
                            <CurrentIcon className="size-3" />
                            {THEME_LABEL[theme]}
                         </span>

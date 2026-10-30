@@ -3,7 +3,8 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { destinoComContexto, VISOES_PROCESSOS } from "@/features/calendario";
 import { ITEM_MOTION_TRANSITION, SECTION_MOTION_TRANSITION } from "./sidebar.constants";
 
 interface SidebarNavigationItemProps {
@@ -42,6 +43,8 @@ export function SidebarSectionLabel({ children, collapsed }: { children: ReactNo
 }
 
 export function SidebarNavigationItem({ active, collapsed, icon: Icon, isMobile, label, onNavigate, path }: SidebarNavigationItemProps) {
+   const { search, pathname } = useLocation();
+   const destino = VISOES_PROCESSOS.includes(path) && VISOES_PROCESSOS.includes(pathname) ? destinoComContexto(path, search) : path;
    return (
       <SidebarMenuItem>
          <SidebarMenuButton
@@ -51,7 +54,7 @@ export function SidebarNavigationItem({ active, collapsed, icon: Icon, isMobile,
             showTooltipWhenExpanded
             className={cn(MENU_ITEM_CLASSES, active ? ACTIVE_MENU_ITEM_CLASSES : INACTIVE_MENU_ITEM_CLASSES, isMobile && "h-11")}
          >
-            <Link to={path} aria-current={active ? "page" : undefined} onClick={onNavigate}>
+            <Link to={destino} aria-current={active ? "page" : undefined} onClick={onNavigate}>
                <AnimatePresence initial={false}>
                   {active && (
                      <motion.span

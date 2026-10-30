@@ -70,7 +70,7 @@ export function MeuPainel() {
    return (
       <div className="grid gap-8">
          {meuSetor ? (
-            <div className="flex items-center gap-3 lg:hidden">
+            <div className="flex items-center gap-3 xl:hidden">
                <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">Meu setor</span>
                <SeletorSetor compacto className="flex-1" />
             </div>
@@ -107,7 +107,7 @@ export function MeuPainel() {
                valor={resumo.emAndamento}
                icon={Hourglass}
                detalhe={`${resumo.travados} travado(s)`}
-               onClick={() => navigate(`/processos?${filtroSetor}`)}
+               onClick={() => navigate(`/processos?${filtroSetor}status=em-andamento`)}
             />
             <StatTile
                label="Concluídos"

@@ -178,4 +178,6 @@ export interface FiltrosProcessos {
    setores: string[];
    blocos: string[];
    urgencias: Urgencia[];
+   /** Filtro de apresentação sobre os status já existentes. */
+   status?: Status[];
 }

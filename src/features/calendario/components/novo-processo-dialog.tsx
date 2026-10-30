@@ -8,6 +8,7 @@ import { toast } from "sonner";
 
 import { MultiSelect } from "@/components/core/multi-select";
 import { Button } from "@/components/ui/button";
+import { Callout } from "@/components/ui/callout";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -109,6 +110,11 @@ export function NovoProcessoDialog({ open, onOpenChange }: NovoProcessoDialogPro
             </DialogHeader>
             <Form {...form}>
                <form id="novo-processo" onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+                  {criar.isError ? (
+                     <Callout tone="danger" title="O processo não foi incluído">
+                        Os campos foram mantidos. Tente incluir novamente.
+                     </Callout>
+                  ) : null}
                   <FormField
                      control={form.control}
                      name="nome"

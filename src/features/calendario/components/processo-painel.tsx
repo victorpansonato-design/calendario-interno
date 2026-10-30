@@ -6,6 +6,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import {
    ArrowRight,
+   ArrowLeft,
    CalendarDays,
    Check,
    ChevronDown,
@@ -18,7 +19,7 @@ import {
    Send,
    Trash2,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import { Segmented } from "@/components/core/segmented";
@@ -26,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { Callout } from "@/components/ui/callout";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
    useAdicionarNota,
    useExcluirProcessoCriado,
@@ -50,21 +52,62 @@ const OPCOES_STATUS: { value: Status; label: string; icon: React.ComponentType<{
 ];
 
 export function ProcessoPainel() {
-   const { aberto, abrir } = useProcessoAberto();
-   const { visao } = useCalendario();
+   const { aberto, abrir, restaurarFoco, podeVoltar, voltar } = useProcessoAberto();
+   const { visao, isLoading, isError, refetch } = useCalendario();
    const processo = aberto ? visao?.processoPorId.get(aberto) : undefined;
+   useEffect(() => {
+      if (processo?.id) document.querySelector<HTMLElement>("[data-processo-detalhe] [data-slot=sheet-title]")?.focus();
+   }, [processo?.id]);
 
    return (
       <Sheet open={Boolean(aberto)} onOpenChange={open => (!open ? abrir(null) : undefined)}>
-         <SheetContent className="w-full gap-0 overflow-y-auto p-0 sm:max-w-xl">
-            {processo ? (
-               <ConteudoPainel key={processo.id} processo={processo} onAbrir={abrir} />
-            ) : (
-               <SheetHeader className="p-6">
-                  <SheetTitle>Processo não encontrado</SheetTitle>
-                  <SheetDescription>O código {aberto} não existe neste calendário. Ele pode ter sido excluído.</SheetDescription>
-               </SheetHeader>
-            )}
+         <SheetContent
+            data-processo-detalhe
+            closeLabel="Fechar detalhes"
+            className="processo-drawer w-full gap-0 overflow-hidden p-0 sm:max-w-xl"
+            onCloseAutoFocus={event => {
+               event.preventDefault();
+               restaurarFoco();
+            }}
+            onOpenAutoFocus={event => {
+               event.preventDefault();
+               document.querySelector<HTMLElement>("[data-slot=sheet-content] [data-slot=sheet-title]")?.focus();
+            }}
+         >
+            <div className="flex min-h-14 shrink-0 items-center border-b bg-card px-5 pr-16">
+               {podeVoltar ? (
+                  <Button variant="ghost" size="sm" onClick={voltar}>
+                     <ArrowLeft data-icon="inline-start" />
+                     Voltar ao processo
+                  </Button>
+               ) : (
+                  <span className="text-sm font-medium">Detalhes do processo</span>
+               )}
+            </div>
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain" key={aberto}>
+               {isLoading ? (
+                  <SheetHeader className="p-6" aria-busy="true">
+                     <SheetTitle tabIndex={-1}>Carregando processo</SheetTitle>
+                     <SheetDescription>Aguarde os dados do calendário.</SheetDescription>
+                     <Skeleton className="h-48" />
+                  </SheetHeader>
+               ) : isError ? (
+                  <SheetHeader className="p-6">
+                     <SheetTitle tabIndex={-1}>Não foi possível carregar o processo</SheetTitle>
+                     <SheetDescription>Tente novamente para consultar os dados.</SheetDescription>
+                     <Button onClick={() => void refetch()} variant="outline">
+                        Tentar de novo
+                     </Button>
+                  </SheetHeader>
+               ) : processo ? (
+                  <ConteudoPainel key={processo.id} processo={processo} onAbrir={abrir} />
+               ) : (
+                  <SheetHeader className="p-6">
+                     <SheetTitle tabIndex={-1}>Processo não encontrado</SheetTitle>
+                     <SheetDescription>O código {aberto} não existe neste calendário. Ele pode ter sido excluído.</SheetDescription>
+                  </SheetHeader>
+               )}
+            </div>
          </SheetContent>
       </Sheet>
    );
@@ -105,6 +148,8 @@ function ConteudoPainel({ processo, onAbrir }: { processo: Processo; onAbrir: (i
    const [editando, setEditando] = useState(false);
    const [nota, setNota] = useState("");
    const [mostrarTecnico, setMostrarTecnico] = useState(false);
+   const pendente = mudarStatus.isPending || adicionarNota.isPending || restaurar.isPending || excluir.isPending;
+   const erro = mudarStatus.error ?? adicionarNota.error ?? restaurar.error ?? excluir.error;
 
    const evento = processo.eventoId ? visao?.eventoPorId.get(processo.eventoId) : undefined;
    const antecessor = processo.antecessor ? visao?.processoPorId.get(processo.antecessor) : undefined;
@@ -147,7 +192,9 @@ function ConteudoPainel({ processo, onAbrir }: { processo: Processo; onAbrir: (i
                <span className="font-mono text-[13px] font-medium tabular text-primary">{processo.id}</span>
                <span className="text-xs text-muted-foreground">{nomeBloco(processo.bloco)}</span>
             </div>
-            <SheetTitle className="font-display text-[19px] font-medium leading-snug">{processo.nome}</SheetTitle>
+            <SheetTitle tabIndex={-1} className="text-lg font-semibold leading-snug">
+               {processo.nome}
+            </SheetTitle>
             <SheetDescription className="sr-only">Detalhes, status e histórico do processo.</SheetDescription>
             <div className="flex flex-wrap items-center gap-2">
                <Setores processo={processo} />
@@ -157,6 +204,16 @@ function ConteudoPainel({ processo, onAbrir }: { processo: Processo; onAbrir: (i
          </SheetHeader>
 
          <div className="grid gap-6 p-6">
+            {erro ? (
+               <Callout tone="danger" title="A alteração não foi salva">
+                  Não foi possível concluir a ação. Seus dados de entrada continuam disponíveis; tente novamente.
+               </Callout>
+            ) : null}
+            {pendente ? (
+               <p role="status" className="text-sm text-muted-foreground">
+                  Salvando alteração…
+               </p>
+            ) : null}
             <section className="grid gap-2">
                <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">Status do setor</span>
                <Segmented
@@ -165,6 +222,7 @@ function ConteudoPainel({ processo, onAbrir }: { processo: Processo; onAbrir: (i
                   opcoes={OPCOES_STATUS}
                   value={processo.status}
                   onChange={trocarStatus}
+                  disabled={pendente}
                />
                {processo.status === "bloqueado" ? (
                   <p className="text-xs text-muted-foreground">
@@ -313,6 +371,7 @@ function ConteudoPainel({ processo, onAbrir }: { processo: Processo; onAbrir: (i
                      <Button
                         variant="ghost"
                         size="sm"
+                        disabled={pendente}
                         onClick={() =>
                            restaurar.mutate({ id: processo.id, autor }, { onSuccess: () => toast.success("Voltou para o original") })
                         }
@@ -329,6 +388,7 @@ function ConteudoPainel({ processo, onAbrir }: { processo: Processo; onAbrir: (i
                      <Button
                         variant="ghost"
                         size="sm"
+                        disabled={pendente}
                         className="text-destructive hover:bg-destructive-soft hover:text-destructive"
                         onClick={() =>
                            excluir.mutate(processo.id, {

@@ -4,6 +4,7 @@
  */
 export { useApagarRegistros } from "@/features/calendario/api/calendario.mutations";
 export { BannerDataSimulada } from "@/features/calendario/components/banner-data-simulada";
+export { BuscaGlobal } from "@/features/calendario/components/busca-global";
 export { ComDados } from "@/features/calendario/components/com-dados";
 export { CalendarioMensal } from "@/features/calendario/components/calendario-mensal";
 export { DependenciaTag, PrazoPropostoTag, SetorChip, Setores, StatusBadge, UrgenciaBadge } from "@/features/calendario/components/badges";
@@ -33,6 +34,7 @@ export {
 export { useCalendario, useHoje } from "@/features/calendario/hooks/use-calendario";
 export { filtrarProcessos, useFiltrosProcessos } from "@/features/calendario/hooks/use-filtros-processos";
 export { useProcessoAberto } from "@/features/calendario/hooks/use-processo-aberto";
+export { contextoConsulta, destinoComContexto, VISOES_PROCESSOS } from "@/features/calendario/lib/contexto-navegacao";
 export { dataCurta, dataPorExtenso, diaMes, diasEntre, intervalo } from "@/features/calendario/lib/datas";
 export { baixarCsv, processosParaCsv } from "@/features/calendario/lib/exportar";
 export { doSetor, resumir } from "@/features/calendario/lib/prazo";

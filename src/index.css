@@ -60,7 +60,7 @@
    --color-sidebar-ring: var(--sidebar-ring);
 
    --font-sans: "Inter", system-ui, sans-serif;
-   --font-display: "JetBrains Mono", ui-monospace, monospace;
+   --font-display: "Inter", system-ui, sans-serif;
    --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
    --shadow-hairline: 0 0 0 1px oklch(39.341% 0.16812 263.91 / 8%);
@@ -226,6 +226,18 @@
    }
    html {
       font-feature-settings: "cv11", "ss01", "ss03";
+      color-scheme: light;
+   }
+   html.dark {
+      color-scheme: dark;
+   }
+   :focus-visible {
+      outline: 2px solid var(--ring);
+      outline-offset: 3px;
+   }
+   input,
+   textarea {
+      caret-color: var(--primary);
    }
    body {
       @apply bg-background text-foreground antialiased;
@@ -244,6 +256,47 @@
    ::selection {
       background: var(--brand-yellow);
       color: oklch(22% 0.04 86);
+   }
+}
+
+.consulta-toolbar {
+   z-index: 20;
+}
+[data-scroll-canvas] {
+   scroll-padding-top: var(--altura-consulta, 1rem);
+}
+.skip-link {
+   position: fixed;
+   top: 0.75rem;
+   left: 1rem;
+   z-index: 100;
+   transform: translateY(-200%);
+   padding: 0.75rem 1rem;
+   border-radius: var(--radius);
+   background: var(--primary);
+   color: var(--primary-foreground);
+}
+.skip-link:focus {
+   transform: translateY(0);
+}
+.processo-drawer {
+   height: 100dvh;
+}
+@media (pointer: coarse) {
+   button,
+   [role="combobox"],
+   [role="radio"] {
+      min-height: 44px;
+   }
+}
+@media (prefers-reduced-motion: reduce) {
+   *,
+   *::before,
+   *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
    }
 }
 

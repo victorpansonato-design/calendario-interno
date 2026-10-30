@@ -16,17 +16,17 @@ const PageHeader = React.forwardRef<HTMLElement, PageHeaderProps>(
   ({ title, eyebrow, description, actions, meta, className, ...props }, ref) => (
     <header
       ref={ref}
-      className={cn("border-b border-border pb-6 pt-2", className)}
+      className={cn("border-b border-border pb-4 pt-2", className)}
       {...props}
     >
-      <div className="flex items-end justify-between gap-6">
+      <div className="flex flex-col items-start justify-between gap-4 lg:flex-row">
         <div className="min-w-0 flex-1">
           {eyebrow ? (
             <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
               {eyebrow}
             </div>
           ) : null}
-          <h1 className="font-display text-[28px] font-medium leading-[1.05] text-foreground">
+          <h1 tabIndex={-1} className="text-2xl font-semibold leading-tight tracking-tight text-foreground">
             {title}
           </h1>
           {description ? (
@@ -45,7 +45,7 @@ const PageHeader = React.forwardRef<HTMLElement, PageHeaderProps>(
         ) : null}
       </div>
       {/* Filete amarelo institucional - assinatura Anchieta */}
-      <div className="mt-6 h-0.5 w-12 rounded-full bg-accent" aria-hidden />
+      <div className="mt-4 h-0.5 w-12 rounded-full bg-accent" aria-hidden />
     </header>
   )
 );

@@ -10,6 +10,7 @@ import { z } from "zod";
 
 import { MultiSelect } from "@/components/core/multi-select";
 import { Button } from "@/components/ui/button";
+import { Callout } from "@/components/ui/callout";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -104,6 +105,11 @@ export function EditarProcessoForm({ processo, onConcluir }: EditarProcessoFormP
    return (
       <Form {...form}>
          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 rounded-xl border bg-surface p-4">
+            {ajustar.isError ? (
+               <Callout tone="danger" title="O ajuste não foi salvo">
+                  Os campos foram mantidos. Tente salvar novamente.
+               </Callout>
+            ) : null}
             <FormField
                control={form.control}
                name="nome"
